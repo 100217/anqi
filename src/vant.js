@@ -1,6 +1,9 @@
 import Vue from 'vue';
-import { Col, Row, Button } from 'vant';
+import { Button, Tab, Tabs, Search, Cell, List } from 'vant';
 
-Vue.use(Col);
-Vue.use(Row);
 Vue.use(Button);
+Vue.use(Tab);
+Vue.use(Tabs);
+Vue.use(Search);
+Vue.use(Cell);
+Vue.use(List);

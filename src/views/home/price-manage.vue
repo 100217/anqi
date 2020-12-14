@@ -1,12 +1,11 @@
 <template>
   <div class="home">
-    <van-button type="primary">主要按钮</van-button>
-    <img :src="src" />
+    
   </div>
 </template>
 
 <script>
-import img from '../assets/logo.png'
+
 export default {
   name: 'Home',
   components: {
@@ -14,7 +13,7 @@ export default {
   },
   data() {
     return {
-      src: img,
+      
     }
   },
 }

@@ -1,11 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex">
     <nav>安琪会员中心</nav>
-    <router-view/>
+    <router-view class="flex-item"/>
   </div>
 </template>
 
 <style lang="less">
+html, body{
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
 #app {
   // font-family: Avenir, Helvetica, Arial, sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
@@ -18,9 +23,22 @@
   height: 100%;
 }
 nav{
-  height: 2rem;
-  line-height: 2;
-  text-align: center;
+  height: 4rem;
+  line-height: 4;
+  text-align: left;
+  padding: 0 20px;
   border-bottom: 1px solid #ddd;
+}
+.flex{
+  display: flex;
+  flex-direction: column;
+}
+.flex-row{
+  flex-direction: row;
+}
+.flex-item{
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
 }
 </style>
