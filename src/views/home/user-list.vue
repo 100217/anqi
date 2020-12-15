@@ -4,7 +4,7 @@
     <div class="list-box flex-item">
       <!-- <van-cell v-for="user in userList" :key="user.id" :title="'姓名：' + user.name" :value="user.phone"></van-cell> -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone"></van-cell>
+        <van-cell class="align-left" v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone"></van-cell>
       </van-list>
     </div>
   </div>
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     showList() {
-      return this.search == '' ? [...this.userList] :this.userList.filter(o => o.name.indexOf(this.search) > -1)
+      return this.search == '' ? [...this.userList] :this.userList.filter(o => o.name.indexOf(this.search) > -1 || o.phone.indexOf(this.search) > -1)
     },
   },
   methods: {
@@ -50,9 +50,5 @@ export default {
 }
 </style>
 <style lang="less">
-.user-list{
-  .van-cell__title{
-    text-align: left;
-  }
-}
+
 </style>

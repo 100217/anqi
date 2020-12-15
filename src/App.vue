@@ -1,10 +1,27 @@
 <template>
   <div id="app" class="flex">
-    <nav>安琪会员中心</nav>
+    <van-nav-bar v-if="showNav" title="安琪会员中心" />
     <router-view class="flex-item"/>
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return {
+      showNav: true
+    }
+  },
+  created() {
+    this.showNavNames = ['Home']
+  },
+  watch: {
+    $route(to) {
+      let { name } = to
+      this.showNav = this.showNavNames.indexOf(name) > -1
+    }
+  }
+}
+</script>
 <style lang="less">
 html, body{
   padding: 0;
@@ -22,13 +39,6 @@ html, body{
   color: #2c3e50;
   height: 100%;
 }
-nav{
-  height: 4rem;
-  line-height: 4;
-  text-align: left;
-  padding: 0 20px;
-  border-bottom: 1px solid #ddd;
-}
 .flex{
   display: flex;
   flex-direction: column;
@@ -40,5 +50,12 @@ nav{
   flex: 1;
   min-width: 0;
   min-height: 0;
+}
+.van-cell{
+  &.align-left{
+    .van-cell__title{
+      text-align: left;
+    }
+  }
 }
 </style>
