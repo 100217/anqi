@@ -4,7 +4,7 @@
     <div class="list-box flex-item">
       <!-- <van-cell v-for="user in userList" :key="user.id" :title="'姓名：' + user.name" :value="user.phone"></van-cell> -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell class="align-left" v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone" @touchstart.native.stop="viewMember(user)" />
+        <van-cell class="align-left" v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone" @click.stop="viewMember(user)" />
       </van-list>
     </div>
     <div class="footer">

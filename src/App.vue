@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="flex">
-    <van-nav-bar v-if="showNav" title="安琪会员中心" />
+    <template v-if="showNav">
+      <van-nav-bar :left-arrow="requireBack" title="安琪会员中心" @click-left="backHome"></van-nav-bar>
+    </template>
     <router-view class="flex-item"/>
   </div>
 </template>
@@ -8,7 +10,8 @@
 export default {
   data() {
     return {
-      showNav: true
+      showNav: true,
+      requireBack: false,
     }
   },
   provide () {
@@ -17,17 +20,24 @@ export default {
     }
   },
   created() {
-    this.showNavNames = ['Home']
+    this.showNavNames = ['Home', 'MemberInfo', 'ExpensesRecords', 'RechargeRecords']
+    this.showBackNames = ['MemberInfo', 'ExpensesRecords', 'RechargeRecords']
   },
   watch: {
     $route(to) {
       let { name } = to
       this.showNav = this.showNavNames.indexOf(name) > -1
+      this.requireBack = this.showBackNames.indexOf(name) > -1
     }
   },
   methods: {
     back() {
       this.$router.go(-1)
+    },
+    backHome() {
+      this.$router.push({
+        name: 'Home'
+      })
     },
   },
 }

@@ -24,6 +24,14 @@ const routes = [
         path: 'info/:userId',
         name: 'MemberInfo',
         component: () => import('../views/member-center/info.vue')
+      },{
+        path: 'expenses-records/:userId',
+        name: 'ExpensesRecords',
+        component: () => import('../views/member-center/expenses-records.vue')
+      },{
+        path: 'recharge-records/:userId',
+        name: 'RechargeRecords',
+        component: () => import('../views/member-center/recharge-records.vue')
       },
     ],
   },
