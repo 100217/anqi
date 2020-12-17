@@ -11,7 +11,21 @@ const routes = [
   },{
     path: '/project-edit/:projectId/',
     name: 'ProjectEdit',
-    component: () => import(/* webpackChunkName: "about" */ '../views/project-edit/index.vue')
+    component: () => import('../views/project-edit/index.vue')
+  },{
+    path: '/add-member',
+    name: 'AddMember',
+    component: () => import('../views/home/add-member.vue')
+  },{
+    path: '/member-center',
+    component: () => import('../views/member-center/index.vue'),
+    children: [
+      {
+        path: 'info/:userId',
+        name: 'MemberInfo',
+        component: () => import('../views/member-center/info.vue')
+      },
+    ],
   },
 ]
 

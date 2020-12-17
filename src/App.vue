@@ -11,6 +11,11 @@ export default {
       showNav: true
     }
   },
+  provide () {
+    return {
+      back: this.back
+    }
+  },
   created() {
     this.showNavNames = ['Home']
   },
@@ -19,14 +24,19 @@ export default {
       let { name } = to
       this.showNav = this.showNavNames.indexOf(name) > -1
     }
-  }
+  },
+  methods: {
+    back() {
+      this.$router.go(-1)
+    },
+  },
 }
 </script>
 <style lang="less">
 html, body{
   padding: 0;
   margin: 0;
-  height: 100vh;
+  height: 100%;
 }
 #app {
   // font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -54,6 +64,14 @@ html, body{
 .van-cell{
   &.align-left{
     .van-cell__title{
+      text-align: left;
+    }
+  }
+  &.align-left-all{
+    .van-cell__title{
+      text-align: left;
+    }
+    .van-cell__value{
       text-align: left;
     }
   }

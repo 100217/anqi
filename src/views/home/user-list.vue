@@ -4,8 +4,11 @@
     <div class="list-box flex-item">
       <!-- <van-cell v-for="user in userList" :key="user.id" :title="'姓名：' + user.name" :value="user.phone"></van-cell> -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell class="align-left" v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone"></van-cell>
+        <van-cell class="align-left" v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone" @touchstart.native.stop="viewMember(user)" />
       </van-list>
+    </div>
+    <div class="footer">
+      <van-button block type="primary" @click="addMember">新增会员</van-button>
     </div>
   </div>
 </template>
@@ -39,6 +42,16 @@ export default {
   },
   methods: {
     onLoad() {},
+    addMember() {
+      this.$router.push({
+        name: 'AddMember'
+      })
+    },
+    viewMember(user) {
+      this.$router.push({
+        path: '/member-center/info/' + user.id
+      })
+    },
   },
 }
 </script>
@@ -46,6 +59,9 @@ export default {
 .user-list{
   .list-box{
     overflow: hidden auto;
+  }
+  .footer{
+    padding: 10px;
   }
 }
 </style>
