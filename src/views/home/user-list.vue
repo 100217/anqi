@@ -4,7 +4,7 @@
     <div class="list-box flex-item">
       <!-- <van-cell v-for="user in userList" :key="user.id" :title="'姓名：' + user.name" :value="user.phone"></van-cell> -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-cell class="align-left" v-for="(user, index) in showList" :key="index" :title="user.name" :value="user.phone" @click.stop="viewMember(user)" />
+        <van-cell class="align-left" v-for="(user, index) in userList" :key="index" :title="user.mname" :value="user.maccount" @click.stop="viewMember(user)" />
       </van-list>
     </div>
     <div class="footer">
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-
+import api from '@api/index'
 export default {
   name: 'UserList',
   data() {
@@ -33,15 +33,30 @@ export default {
           phone: '18900001233'
         }
       ],
+      start: 0,
+      size: 10,
     }
   },
-  computed: {
-    showList() {
-      return this.search == '' ? [...this.userList] :this.userList.filter(o => o.name.indexOf(this.search) > -1 || o.phone.indexOf(this.search) > -1)
-    },
+  created() {
+    this.start = 0
+    this.userList = []
+    this.onLoad()
   },
   methods: {
-    onLoad() {},
+    onLoad() {
+      const self = this
+      const params = {
+        mname: self.search,
+        m: self.start,
+        n: self.size
+      }
+      console.log(api)
+      api.getMemberList(params).then(res => {
+        if(res.status == 200) {
+          this.userList = res.data
+        }
+      })
+    },
     addMember() {
       this.$router.push({
         name: 'AddMember'
@@ -49,7 +64,7 @@ export default {
     },
     viewMember(user) {
       this.$router.push({
-        path: '/member-center/info/' + user.id
+        path: '/member-center/info/' + user.mid
       })
     },
   },
