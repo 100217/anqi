@@ -3,7 +3,7 @@
     <van-tabs class="member-center-tab" v-model="activeTab" @change="changeView">
       <van-tab v-for="(tab, index) in tabs" :key="index" :title="tab.name"></van-tab>
     </van-tabs>
-    <router-view class="flex-item"/>
+    <router-view class="flex-item" :user="user"/>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       activeTab: 0,
+      user: {},
       tabs: [
         {
           name: '会员信息',
@@ -30,15 +31,32 @@ export default {
       ],
     }
   },
+  watch: {
+    $route(to, from) {
+      this.activeTab = this.tabs.findIndex( o => to.path.indexOf(o.path) > -1)
+    },
+  },
   created() {
-    this.userId = this.$route.params.userId
-    this.activeTab = this.tabs.findIndex( o => this.$route.path.indexOf(o.path) > -1)
+    this.maccount = this.$route.params.maccount
+    this.getUserInfo()
   },
   methods:{
     changeView(index) {
-      let {userId} = this
-      let path = this.tabs[index].path + userId
+      let {maccount} = this
+      let path = this.tabs[index].path + maccount
       this.$router.push({path})
+    },
+    getUserInfo() {
+      const self = this
+      const {maccount} = self
+      const params = {
+        maccount
+      }
+      self.$api.getMember(params).then(res => {
+        if(res.status == 200) {
+          self.user = res.data
+        }
+      })
     },
   }
 }

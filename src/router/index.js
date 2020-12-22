@@ -21,15 +21,15 @@ const routes = [
     component: () => import('../views/member-center/index.vue'),
     children: [
       {
-        path: 'info/:userId',
+        path: 'info/:maccount',
         name: 'MemberInfo',
         component: () => import('../views/member-center/info.vue')
       },{
-        path: 'expenses-records/:userId',
+        path: 'expenses-records/:maccount',
         name: 'ExpensesRecords',
         component: () => import('../views/member-center/expenses-records.vue')
       },{
-        path: 'recharge-records/:userId',
+        path: 'recharge-records/:maccount',
         name: 'RechargeRecords',
         component: () => import('../views/member-center/recharge-records.vue')
       },

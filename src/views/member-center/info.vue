@@ -1,9 +1,9 @@
 <template>
   <div class="member-center-info flex">
     <div class="content flex-item">
-      <van-cell class="align-left-all" :border="false" title="姓名" :value="userInfo.name"/>
-      <van-cell class="align-left-all" :border="false" title="手机号码" :value="userInfo.phone"/>
-      <van-cell class="align-left-all" :border="false" title="余额" :value="userInfo.balance"/>
+      <van-cell class="align-left-all" :border="false" title="姓名" :value="user.mname"/>
+      <van-cell class="align-left-all" :border="false" title="手机号码" :value="user.maccount"/>
+      <van-cell class="align-left-all" :border="false" title="余额" :value="user.balance"/>
     </div>
     <div class="footer flex-row">
       <van-button type="info">消费</van-button>
@@ -15,14 +15,25 @@
 <script>
 export default {
   name: 'MemberCenter',
+  props: {
+    user: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
+  },
   data() {
     return {
-      userInfo: {
-        name: '钱百万',
-        phone: '13325767894',
-        balance: '500'
-      },
+      
     }
+  },
+  created() {
+    this.maccount = this.$route.params.maccount
+    
+  },
+  methods: {
+    
   },
 }
 </script>

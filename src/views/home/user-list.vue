@@ -1,6 +1,6 @@
 <template>
   <div class="user-list flex">
-    <van-search v-model="search" placeholder="请输入搜索关键词" />
+    <van-search v-model="search" placeholder="请输入搜索关键词" @search="searchChange" />
     <div class="list-box flex-item">
       <!-- <van-cell v-for="user in userList" :key="user.id" :title="'姓名：' + user.name" :value="user.phone"></van-cell> -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
@@ -14,25 +14,14 @@
 </template>
 
 <script>
-import api from '@api/index'
 export default {
   name: 'UserList',
   data() {
     return {
       search: '',
       loading: false,
-      finished: true,
-      userList: [
-        {
-          id: 1,
-          name: '赵匡胤',
-          phone: '13312348877'
-        },{
-          id: 2,
-          name: '钱百万',
-          phone: '18900001233'
-        }
-      ],
+      finished: false,
+      userList: [],
       start: 0,
       size: 10,
     }
@@ -40,20 +29,27 @@ export default {
   created() {
     this.start = 0
     this.userList = []
-    this.onLoad()
+    // this.onLoad()
   },
   methods: {
     onLoad() {
       const self = this
+      self.loading = true
       const params = {
         mname: self.search,
         m: self.start,
         n: self.size
       }
-      console.log(api)
-      api.getMemberList(params).then(res => {
+      self.$api.getMemberList(params).then(res => {
         if(res.status == 200) {
-          this.userList = res.data
+          if(res.data && res.data.length > 0) {
+            self.userList.push(...res.data)
+            self.start = self.userList.length
+            if(res.data.length < self.size) {
+              self.finished = true
+            }
+          }
+          self.loading = false
         }
       })
     },
@@ -64,8 +60,12 @@ export default {
     },
     viewMember(user) {
       this.$router.push({
-        path: '/member-center/info/' + user.mid
+        path: '/member-center/info/' + user.maccount
       })
+    },
+    searchChange() {
+      this.start = 0
+      this.onLoad()
     },
   },
 }

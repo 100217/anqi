@@ -1,5 +1,7 @@
 import Vue from 'vue';
-import { Button, Tab, Tabs, Search, Cell, List, NavBar, SwipeCell, Icon, Field, Form, Picker, Popup, NumberKeyboard} from 'vant';
+import { Button, Tab, Tabs, Search, Cell, List } from 'vant';
+import { NavBar, SwipeCell, Icon, Field, Form, Picker } from 'vant';
+import { Popup, NumberKeyboard, Dialog, Toast } from 'vant';
 
 Vue.use(Button);
 Vue.use(Tab);
@@ -15,3 +17,5 @@ Vue.use(Form);
 Vue.use(Picker);
 Vue.use(Popup);
 Vue.use(NumberKeyboard);
+Vue.use(Dialog);
+Vue.use(Toast);
