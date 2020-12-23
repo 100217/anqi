@@ -6,8 +6,8 @@
       <van-cell class="align-left-all" :border="false" title="余额" :value="user.balance"/>
     </div>
     <div class="footer flex-row">
-      <van-button type="info">消费</van-button>
-      <van-button type="info">充值</van-button>
+      <van-button type="info" @click="toExpenses">消费</van-button>
+      <van-button type="info" @click="toRecharge">充值</van-button>
     </div>
   </div>
 </template>
@@ -30,10 +30,18 @@ export default {
   },
   created() {
     this.maccount = this.$route.params.maccount
-    
   },
   methods: {
-    
+    toExpenses() {
+      this.$router.push({
+        path: '/member-expenses/' + this.maccount
+      })
+    },
+    toRecharge() {
+      this.$router.push({
+        path: '/member-recharge/' + this.maccount
+      })
+    },
   },
 }
 </script>

@@ -60,7 +60,7 @@ export default {
             })
           } else {
             self.$dialog.alert({
-              message: '新增成功',
+              message: '新增失败，请重试',
               theme: 'round-button',
             })
           }

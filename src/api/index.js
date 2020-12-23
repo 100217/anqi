@@ -26,5 +26,4 @@ api.forEach(url => {
     }
 })
 
-console.log(request)
 export default request

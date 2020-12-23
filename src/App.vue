@@ -20,8 +20,8 @@ export default {
     }
   },
   created() {
-    this.showNavNames = ['Home', 'MemberInfo', 'ExpensesRecords', 'RechargeRecords']
-    this.showBackNames = ['MemberInfo', 'ExpensesRecords', 'RechargeRecords']
+    this.showNavNames = ['Home', 'PriceManage', 'MemberInfo', 'ExpensesRecords', 'RechargeRecords',]
+    this.showBackNames = ['MemberInfo', 'ExpensesRecords', 'RechargeRecords',]
   },
   watch: {
     $route(to) {
@@ -47,6 +47,7 @@ html, body{
   padding: 0;
   margin: 0;
   height: 100%;
+  min-height: 80vh;
 }
 #app {
   // font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -83,6 +84,13 @@ html, body{
     }
     .van-cell__value{
       text-align: left;
+    }
+  }
+  &.van-field.input-align-right{
+    .van-cell__value{
+      .van-field__control{
+        text-align: right;
+      }
     }
   }
 }

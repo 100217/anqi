@@ -10,9 +10,6 @@
 <script>
 export default {
   name: 'MemberCenter',
-  components: {
-    
-  },
   data() {
     return {
       activeTab: 0,
@@ -38,6 +35,7 @@ export default {
   },
   created() {
     this.maccount = this.$route.params.maccount
+    this.activeTab = this.tabs.findIndex( o => this.$route.path.indexOf(o.path) > -1)
     this.getUserInfo()
   },
   methods:{

@@ -1,34 +1,42 @@
 <template>
   <div class="home flex">
-    <van-tabs class="home-tab" v-model="activeTab">
-      <van-tab v-for="tab in tabs" :key="tab.value" :title="tab.name"></van-tab>
+    <van-tabs class="home-tab" v-model="activeTab" @change="changeView">
+      <van-tab v-for="(tab, index) in tabs" :key="index" :title="tab.name"></van-tab>
     </van-tabs>
-    <component class="home-view flex-item" :is="components[activeTab]"></component>
+    <router-view  class="home-view flex-item" />
   </div>
 </template>
 
 <script>
-import useList from './user-list'
-import priceManage from './price-manage'
 export default {
   name: 'Home',
-  components: {
-    useList, priceManage
-  },
   data() {
     return {
-      components: ['useList', 'priceManage'],
       activeTab: 0,
       tabs: [
         {
           name: '会员列表',
-          value: 1
+          path: '/user-list'
         },{
           name: '价目管理',
-          value: 2
+          path: '/price-manage'
         }
       ],
     }
+  },
+  watch: {
+    $route(to, from) {
+      this.activeTab = this.tabs.findIndex( o => to.path.indexOf(o.path) > -1)
+    },
+  },
+  created() {
+    this.activeTab = this.tabs.findIndex( o => this.$route.path.indexOf(o.path) > -1)
+  },
+  methods: {
+    changeView(index) {
+      let path = this.tabs[index].path
+      this.$router.push({path})
+    },
   },
 }
 </script>

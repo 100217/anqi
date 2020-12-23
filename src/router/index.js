@@ -6,8 +6,21 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/home/index.vue')
+    redirect: '/user-list'
+  },{
+    path: '/',
+    component: () => import(/* webpackChunkName: "about" */ '../views/home/index.vue'),
+    children: [
+      {
+        path: '/user-list',
+        name: 'Home',
+        component: () => import('../views/home/user-list.vue')
+      },{
+        path: '/price-manage',
+        name: 'PriceManage',
+        component: () => import('../views/home/price-manage.vue')
+      }
+    ],
   },{
     path: '/project-edit/:projectId/',
     name: 'ProjectEdit',
@@ -32,9 +45,17 @@ const routes = [
         path: 'recharge-records/:maccount',
         name: 'RechargeRecords',
         component: () => import('../views/member-center/recharge-records.vue')
-      },
+      }
     ],
-  },
+  },{
+    path: '/member-expenses/:maccount',
+    name: 'MemberExpenses',
+    component: () => import('../views/member-center/expenses.vue')
+  },{
+    path: '/member-recharge/:maccount',
+    name: 'MemberRecharge',
+    component: () => import('../views/member-center/recharge.vue')
+  }
 ]
 
 const router = new VueRouter({
