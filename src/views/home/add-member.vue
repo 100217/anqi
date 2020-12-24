@@ -5,16 +5,16 @@
       <van-field v-model="name" name="name" label="姓名" input-align="right" :rules="[{ required: true, message: '请填写姓名' }]"/>
       <van-field v-model="phone" type="number" name="phone" label="手机号码" input-align="right" :rules="[{ required: true, validator: phoneValidator, message: '请正确输入手机号码' }]"/>
       <van-field v-model="balance" type="number" name="balance" label="充值" input-align="right" :rules="[{ required: true, validator: balanceValidator, message: '请正确输入充值金额' }]"/>
-      <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">提交</van-button>
-      </div>
+      <foot-btn :show-ctrol="false" />
     </van-form>
   </div>
 </template>
 
 <script>
 import api from '@api/index'
+import FootBtn from '@/components/foot-btn.vue'
 export default {
+  components: { FootBtn },
   name: 'AddMember',
   data() {
     return {
@@ -50,21 +50,19 @@ export default {
       self.$api.insertMember(params).then(res => {
         if(res.status == 200) {
           if(res.data == 1) {
-            self.$dialog.alert({
-              message: '新增成功',
-              theme: 'round-button',
-            }).then(() => {
+            let toast = self.$toast.success('新增成功')
+            setTimeout(() => {
+              toast.clear()
               self.$router.push({
                 path: '/member-center/info/' + self.phone
               })
-            })
+            }, 1000)
           } else {
-            self.$dialog.alert({
-              message: '新增失败，请重试',
-              theme: 'round-button',
-            })
+            let toast = self.$toast.fail(res.data)
+            setTimeout(() => {
+              toast.clear()
+            }, 1000)
           }
-          toast.close()
         }
       })
       
@@ -72,8 +70,3 @@ export default {
   },
 }
 </script>
-<style lang="less" scoped>
-.add-member{
-  
-}
-</style>

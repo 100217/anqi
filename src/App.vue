@@ -93,5 +93,12 @@ html, body{
       }
     }
   }
+  &.van-field{
+    .van-cell__value{
+      .van-field__control{
+        padding-right: 10px;
+      }
+    }
+  }
 }
 </style>

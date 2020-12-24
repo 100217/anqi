@@ -2,19 +2,18 @@
   <div class="user-list flex">
     <van-search v-model="search" placeholder="请输入搜索关键词" @search="searchChange" />
     <div class="list-box flex-item">
-      <!-- <van-cell v-for="user in userList" :key="user.id" :title="'姓名：' + user.name" :value="user.phone"></van-cell> -->
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <van-cell class="align-left" v-for="(user, index) in userList" :key="index" :title="user.mname" :value="user.maccount" @click.stop="viewMember(user)" />
       </van-list>
     </div>
-    <div class="footer">
-      <van-button block type="primary" @click="addMember">新增会员</van-button>
-    </div>
+    <foot-btn :round="false" type="primary" text="新增会员" :form-submit="false" :click-event="addMember" />
   </div>
 </template>
 
 <script>
+import FootBtn from '@/components/foot-btn.vue'
 export default {
+  components: { FootBtn },
   name: 'UserList',
   data() {
     return {
@@ -29,7 +28,6 @@ export default {
   created() {
     this.start = 0
     this.userList = []
-    // this.onLoad()
   },
   methods: {
     onLoad() {
@@ -79,7 +77,4 @@ export default {
     padding: 10px;
   }
 }
-</style>
-<style lang="less">
-
 </style>

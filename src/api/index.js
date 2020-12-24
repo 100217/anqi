@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { Toast } from 'vant';
 const api = [
     "getMemberList",
     "insertMember",
@@ -17,13 +17,30 @@ const api = [
 const request = {}
 
 api.forEach(url => {
-    request[url] = params => {
-        return axios({
-            url: '/api/' + url,
-            method: 'get',
-            params,
+    request[url] = (params, isLoading = true) => {
+        return new Promise((resolve, reject) => {
+            let loading
+            if(isLoading) {
+                loading = Toast.loading({
+                    message: '加载中...',
+                    forbidClick: true,
+                });
+            }
+            axios({
+                url: '/api/' + url,
+                method: 'get',
+                params,
+            }).then(response => {
+                isLoading && loading.clear()
+                resolve(response)
+            }, err => {
+                isLoading && loading.clear()
+                reject(err)
+            })
         })
     }
 })
+
+
 
 export default request

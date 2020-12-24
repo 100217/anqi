@@ -8,17 +8,17 @@
       <van-popup v-model="showUnit" position="bottom">
         <van-picker show-toolbar :columns="units" @confirm="onConfirm" @cancel="showUnit = false"/>
       </van-popup>
-      <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">提交</van-button>
-      </div>
+      <foot-btn :show-ctrol="false" />
     </van-form>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import FootBtn from '@/components/foot-btn'
 export default {
   name: 'ProjectEdit',
+  components: { FootBtn },
   data() {
     return {
       title: '',
@@ -63,27 +63,21 @@ export default {
       }
       api(params).then(res => {
         if(res.status == 200 && res.data == 1) {
-          self.$dialog.alert({
-            message: msg,
-            theme: 'round-button',
-          }).then(() => {
+          let toast = self.$toast.success(msg)
+          setTimeout(() => {
+            toast.clear()
             self.$router.push({
               name: 'PriceManage'
             })
-          })
+          }, 1000)
         } else {
-          self.$dialog.alert({
-            message: '保存失败，请稍后重试',
-            theme: 'round-button',
-          })
+          let toast = self.$toast.fail(res.data)
+          setTimeout(() => {
+            toast.clear()
+          }, 1000)
         }
       })
     },
   },
 }
 </script>
-<style lang="less" scoped>
-.user-list{
-  
-}
-</style>

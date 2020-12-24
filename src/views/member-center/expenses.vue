@@ -1,20 +1,17 @@
 <template>
   <div class="member-center-expenses flex">
     <van-nav-bar title="会员消费" left-arrow @click-left="back" />
-    <div class="content flex-item">
+    <div class="content flex-item flex">
       <div class="user-info">
-        <!-- <div>姓名：{{ user.mname }}</div>
-        <div>电话：{{ user.maccount }}</div>
-        <div>余额：{{ user.balance }}</div> -->
         <van-cell class="align-left-all" :border="false" title="姓名" :value="user.mname"/>
         <van-cell class="align-left-all" :border="false" title="手机号码" :value="user.maccount"/>
         <van-cell class="align-left-all" :border="false" title="余额" :value="user.balance"/>
-        <van-field class="input-align-right" v-model="expenses" label="本次消费" />
+        <van-field class="input-align-right" type="number" v-model="expenses" label="本次消费" />
         
       </div>
       <div class="user-expenses-total flex-item">
         <van-divider />
-        <div class="user-expenses-item flex flex-row" v-for="(item, index) in itemList" :key="index">
+        <div class="user-expenses-item flex-item flex flex-row" v-for="(item, index) in itemList" :key="index">
           <div class="title flex-item">
             {{`${item.itemnm}  ${item.price} / ${getUnit(item.unit)}`}}
           </div>
@@ -26,15 +23,15 @@
         </div>
       </div>
     </div>
-     <div style="margin: 16px;">
-        <van-button round block type="info">提交</van-button>
-      </div>
+    <foot-btn :form-submit="false" :click-event="submit" />
   </div>
 </template>
 
 <script>
+import FootBtn from '@/components/foot-btn'
 export default {
   name: 'Expenses',
+  components: { FootBtn },
   inject: ['back'],
   data() {
     return {
@@ -108,15 +105,53 @@ export default {
       this.itemList.splice(index, 1, item)
       this.calcTotal()
     },
+    submit() {
+      const self = this
+      if(self.expenses <= 0) {
+        self.$dialog.alert({
+          message: '请确认消费金额后再提交'
+        })
+        return
+      }
+      let discon = ''
+      self.itemList.forEach(item => {
+        if(item.num > 0) {
+          discon += `${item.itemnm}${item.num}${self.getUnit(item.unit)},`
+        }
+      })
+      discon = discon.slice(0,-1)
+      const params = {
+        mid: self.user.mid,
+        totalcon: self.expenses,
+        discon: discon
+      }
+      self.$api.insertConsumption(params).then(res => {
+        if(res.status == 200 && res.data == 1) {
+          let toast = self.$toast.success('提交消费成功')
+          setTimeout(() => {
+            toast.clear()
+            self.$router.push({
+              name: 'ExpensesRecords',
+              params: {
+                maccount: self.maccount
+              }
+            })
+          }, 1000)
+        } else {
+          let toast = self.$toast.fail(res.data)
+          setTimeout(() => {
+            toast.clear()
+          }, 1000)
+        }
+      })
+    },
   },
 }
 </script>
 <style lang="less" scoped>
 .member-center-expenses{
-  .user-info{
-    
-  }
   .user-expenses-total{
+    overflow: hidden auto;
     .van-divider{
       margin-top: 0;
     }

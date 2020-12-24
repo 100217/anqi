@@ -58,8 +58,3 @@ export default {
   },
 }
 </script>
-<style lang="less" scoped>
-.member-center-recharge-records{
-  
-}
-</style>

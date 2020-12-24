@@ -9,18 +9,17 @@
         <van-cell class="align-left" :title="item.itemnm" :value="item.price + '/' + unit(item.unit)"></van-cell>
       </van-swipe-cell>
     </div>
-    <div class="footer">
-      <van-button block type="primary" @click="addItem">新增项目</van-button>
-    </div>
+    <foot-btn :round="false" type="primary" text="新增项目" :form-submit="false" :click-event="addItem" />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import FootBtn from '@/components/foot-btn.vue'
 export default {
   name: 'PriceManage',
   components: {
-    
+    FootBtn 
   },
   data() {
     return {
@@ -65,12 +64,11 @@ export default {
         }
         self.$api.deleteItem(params).then(res => {
           if(res.status == 200 && res.data == 1) {
-            self.$dialog.alert({
-              message: '删除成功',
-              theme: 'round-button',
-            }).then(() => {
+            let toast = self.$toast.success('删除成功')
+            setTimeout(() => {
+              toast.clear()
               self.getList()
-            })
+            }, 1000)
           }
         })
       }).catch(() => {
