@@ -16,17 +16,17 @@ export default {
       tabs: [
         {
           name: '会员列表',
-          path: '/user-list'
+          path: '/home'
         },{
           name: '价目管理',
-          path: '/price-manage'
+          path: '/home/price-manage'
         }
       ],
     }
   },
   watch: {
     $route(to, from) {
-      this.activeTab = this.tabs.findIndex( o => to.path.indexOf(o.path) > -1)
+      this.activeTab = this.tabs.findIndex( o => to.path == o.path )
     },
   },
   created() {

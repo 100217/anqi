@@ -6,17 +6,21 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/user-list'
+    redirect: '/login'
   },{
-    path: '/',
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/login/index.vue')
+  },{
+    path: '/home',
     component: () => import(/* webpackChunkName: "about" */ '../views/home/index.vue'),
     children: [
       {
-        path: '/user-list',
+        path: '/',
         name: 'Home',
         component: () => import('../views/home/user-list.vue')
       },{
-        path: '/price-manage',
+        path: 'price-manage',
         name: 'PriceManage',
         component: () => import('../views/home/price-manage.vue')
       }
