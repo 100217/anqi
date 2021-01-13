@@ -11,7 +11,10 @@ const api = [
     "getItemList",
     "insertItem",
     "updateItem",
-    "deleteItem"
+    "deleteItem",
+    "mglogin",
+    "getConsumptionTotal",
+    "getRechargeTotal"
 ]
 
 const request = {}

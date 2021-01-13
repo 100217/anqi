@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -19,13 +20,35 @@ export default {
       back: this.back
     }
   },
+  computed: {
+    ...mapGetters(['user'])
+  },
   created() {
+    this.whiteRoutes = ['Login'],
+    this.limitRoutes= ['MemberInfo', 'ExpensesRecords', 'RechargeRecords'],
     this.showNavNames = ['Home', 'PriceManage', 'MemberInfo', 'ExpensesRecords', 'RechargeRecords',]
     this.showBackNames = ['MemberInfo', 'ExpensesRecords', 'RechargeRecords',]
   },
   watch: {
     $route(to) {
       let { name } = to
+      if(this.whiteRoutes.indexOf(name) == -1) {
+        if(this.user == null || JSON.stringify(this.user) == '{}') {
+          this.$router.push({
+            name: 'Login'
+          })
+          return
+        }
+        if(this.user.mtype != '0' && this.limitRoutes.indexOf(name) == -1) {
+          this.$router.push({
+            name: this.limitRoutes[0],
+            params: {
+              maccount: this.user.maccount
+            }
+          })
+          return
+        } 
+      }
       this.showNav = this.showNavNames.indexOf(name) > -1
       this.requireBack = this.showBackNames.indexOf(name) > -1
     }

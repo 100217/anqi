@@ -44,10 +44,14 @@ export default {
       }
       self.$api.getConsumptionList(params).then(res => {
         if(res.status == 200) {
-          if(res.data && res.data.length > 0) {
-            self.list.push(...res.data)
-            self.start = self.list.length
-            if(res.data.length < self.size) {
+          if(res.data) {
+            if(res.data.length > 0) {
+              self.list.push(...res.data)
+              self.start = self.list.length
+              if(res.data.length < self.size) {
+                self.finished = true
+              }
+            } else {
               self.finished = true
             }
           }

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { Button, Tab, Tabs, Search, Cell, List } from 'vant';
 import { NavBar, SwipeCell, Icon, Field, Form, Picker } from 'vant';
-import { Popup, NumberKeyboard, Dialog, Toast, Divider } from 'vant';
+import { Popup, NumberKeyboard, Dialog, Toast, Divider} from 'vant';
 
 Vue.use(Button);
 Vue.use(Tab);

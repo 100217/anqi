@@ -62,6 +62,11 @@ const routes = [
   }
 ]
 
+
+export const addUserRoute = () => {}
+
+export const addOwnerRoute = () => {}
+
 const router = new VueRouter({
   // mode: 'history',
   mode: 'hash',

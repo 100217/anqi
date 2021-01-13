@@ -6,13 +6,16 @@
       <van-cell class="align-left-all" :border="false" title="余额" :value="user.balance"/>
     </div>
     <div class="footer flex-row">
-      <van-button type="info" @click="toExpenses">消费</van-button>
-      <van-button type="info" @click="toRecharge">充值</van-button>
+      <template v-if="user.mtype == '0'">
+        <van-button type="info" @click="toExpenses">消费</van-button>
+        <van-button type="info" @click="toRecharge">充值</van-button>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'MemberCenter',
   props: {
@@ -27,6 +30,9 @@ export default {
     return {
       
     }
+  },
+  computed: {
+    ...mapGetters(['user'])
   },
   created() {
     this.maccount = this.$route.params.maccount
