@@ -30,6 +30,18 @@ export default {
       total: 0,
     }
   },
+  watch: {
+    customer(newVal, oldVal) {
+      if(newVal != null && newVal.mid != oldVal.mid) {
+        this.list = []
+        this.start = 0
+        this.total = 0
+        this.finished = false
+        this.getRecharge()
+        this.onLoad()
+      }
+    },
+  },
   created() {
     this.start = 0
     this.list = []

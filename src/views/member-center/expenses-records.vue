@@ -35,6 +35,18 @@ export default {
     this.list = []
     this.getExpense()
   },
+  watch: {
+    customer(newVal, oldVal) {
+      if(newVal != null && newVal.mid != oldVal.mid) {
+        this.list = []
+        this.start = 0
+        this.total = 0
+        this.finished = false
+        this.getExpense()
+        this.onLoad()
+      }
+    },
+  },
   methods: {
     getExpense() {
       const self = this

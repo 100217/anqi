@@ -63,6 +63,7 @@ export default {
     },
     searchChange() {
       this.start = 0
+      this.userList = []
       this.onLoad()
     },
   },
