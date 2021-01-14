@@ -1,6 +1,6 @@
 <template>
   <div class="member-center-expenses-records flex">
-    <van-cell class="align-left" :title="'当前余额：' + user.balance" :value="'共消费' + user.total" />
+    <van-cell class="align-left" :title="'当前余额：' + customer.balance" :value="'共消费' + total" />
     <div class="flex-item">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <van-cell class="align-left" v-for="(record, index) in list" :key="index" :title="record.condate" :value="'消费 ' + record.totalcon" />
@@ -13,7 +13,7 @@
 export default {
   name: 'ExpensesRecords',
   props: {
-    user: {
+    customer: {
       type: Object,
       default: () => {
         return {}
@@ -27,18 +27,31 @@ export default {
       list: [],
       start: 0,
       size: 10,
+      total: 0,
     }
   },
   created() {
     this.start = 0
     this.list = []
+    this.getExpense()
   },
   methods: {
+    getExpense() {
+      const self = this
+      const params = {
+        mid: self.customer.mid
+      }
+      self.$api.getConsumptionTotal(params).then(res => {
+        if(res.status == 200) {
+          self.total = res.data || 0
+        }
+      })
+    },
     onLoad() {
       const self = this
       self.loading = true
       const params = {
-        mid: self.user.mid,
+        mid: self.customer.mid,
         m: self.start,
         n: self.size
       }

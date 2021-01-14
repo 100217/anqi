@@ -3,7 +3,7 @@
     <van-tabs class="member-center-tab" v-model="activeTab" @change="changeView">
       <van-tab v-for="(tab, index) in tabs" :key="index" :title="tab.name"></van-tab>
     </van-tabs>
-    <router-view class="flex-item" :user="user"/>
+    <router-view class="flex-item" :customer="user"/>
   </div>
 </template>
 

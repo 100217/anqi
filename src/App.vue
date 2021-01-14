@@ -50,7 +50,7 @@ export default {
         } 
       }
       this.showNav = this.showNavNames.indexOf(name) > -1
-      this.requireBack = this.showBackNames.indexOf(name) > -1
+      this.requireBack = this.user.mtype != '0' ? false : this.showBackNames.indexOf(name) > -1
     }
   },
   methods: {

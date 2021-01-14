@@ -1,9 +1,9 @@
 <template>
   <div class="member-center-info flex">
     <div class="content flex-item">
-      <van-cell class="align-left-all" :border="false" title="姓名" :value="user.mname"/>
-      <van-cell class="align-left-all" :border="false" title="手机号码" :value="user.maccount"/>
-      <van-cell class="align-left-all" :border="false" title="余额" :value="user.balance"/>
+      <van-cell class="align-left-all" :border="false" title="姓名" :value="customer.mname"/>
+      <van-cell class="align-left-all" :border="false" title="手机号码" :value="customer.maccount"/>
+      <van-cell class="align-left-all" :border="false" title="余额" :value="customer.balance"/>
     </div>
     <div class="footer flex-row">
       <template v-if="user.mtype == '0'">
@@ -19,7 +19,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'MemberCenter',
   props: {
-    user: {
+    customer: {
       type: Object,
       default: () => {
         return {}
